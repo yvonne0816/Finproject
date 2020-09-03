@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>                                                                                                      
+       
+    <div id="inserdiv"></div>
+   <button name="test"   id="DivValue"  onclick = 'change()'value="1"></button>
+   <button name="test"   id="DivValue"  onclick = 'change()'value="2"></button>
+   <button name="test"   id="DivValue"  onclick = 'change()'value="3"></button>
+   <button name="test"   id="DivValue"  onclick = 'change()'value="4"></button>
+   <button name="test"   id="DivValue"  onclick = 'change()'value="5"></button>
+   <button name="test"   id="DivValue"  onclick = 'change()'value="6"></button>
+ </body>                      
+ <script>           
+
+var   adiv =  document.getElementsByTagName('button');        
+var  ra = document.getElementById("DivValue").getAttribute('value');           
+ function change(){
+    for(var i=0; i< adiv.length ; i++ ){
+   var dad =  ra[i] ;
+                 
+ document.getElementById("inserdiv").innerHTML=dad[i];
+                             }
+                }
+ </script>
+</html>

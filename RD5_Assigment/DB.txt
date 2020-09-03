@@ -1,0 +1,25 @@
+CREATE DATABASE mybank DEFAULT CHARACTER SET utf8;
+
+USE mybank;
+
+CREATE TABLE `member` (
+  `m_id` int(11) NOT NULL auto_increment,
+  `m_name` varchar(20) NOT NULL,
+  `m_username` varchar(30) NOT NULL,
+  `m_passwd` varchar(100) NOT NULL,
+  `total_money` int(11) NOT NULL DEFAULT '0',
+    PRIMARY KEY(m_id)
+);
+
+
+CREATE TABLE `list` (
+  `l_id` int(11) NOT NULL auto_increment,
+  `m_cash` int(11) NOT NULL,
+  `action` varchar(10) NOT NULL,
+  `over` int(11) NOT NULL,
+  `date` DATETIME,
+  `t_number` int(15) NOT NULL,
+  `m_id` int,
+    CONSTRAINT fk_member_id FOREIGN KEY (m_id) REFERENCES member(m_id),
+    PRIMARY KEY(l_id)
+);

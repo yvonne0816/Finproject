@@ -1,0 +1,57 @@
+CREATE DATABASE shopping DEFAULT CHARACTER SET utf8;
+
+USE shopping;
+
+CREATE TABLE `member` (
+  `m_id` int(11) NOT NULL auto_increment,
+  `m_name` varchar(20) NOT NULL,
+  `m_username` varchar(30) NOT NULL,
+  `m_passwd` varchar(100) NOT NULL,
+  `m_sex` varchar(10) NOT NULL,
+  `m_email` varchar(100) NOT NULL,
+  `m_phone` varchar(45) NOT NULL,
+  `m_address` varchar(100) NOT NULL,
+  `canuse` BOOLEAN   TINYINT(1) NOT NULL DEFAULT '1',
+    PRIMARY KEY(m_id)
+);
+
+
+
+CREATE TABLE `category` (
+  `c_id` int(11) NOT NULL auto_increment,
+  `c_name` varchar(10) NOT NULL,
+    PRIMARY KEY(c_id)
+);
+
+
+CREATE TABLE `product` (
+  `p_id` int(11) NOT NULL auto_increment,
+  `p_name` varchar(50) NOT NULL,
+  `p_price` int(10) NOT NULL,
+  `p_quantity` int(10) NOT NULL,
+  `p_img` varchar(300) NOT NULL,
+  PRIMARY KEY(p_id),
+  `c_id` int,
+    CONSTRAINT fk_category_id FOREIGN KEY (c_id) REFERENCES category(c_id) 
+);
+
+
+
+CREATE TABLE `dreamlist` (
+  `d_id` int(11) NOT NULL auto_increment,
+  `d_quantity` int(10) NOT NULL,
+  PRIMARY KEY(d_id),
+  `p_id` int,
+    CONSTRAINT fk_product_id FOREIGN KEY (p_id) REFERENCES product(p_id) ,
+    `m_id` int,
+    CONSTRAINT fk_member_id FOREIGN KEY (m_id) REFERENCES member(m_id),
+    `buy` BOOLEAN NOT NULL
+);
+
+
+
+
+
+insert into member(m_name, m_username, m_passwd, m_sex, m_email, m_phone, m_address) VALUES($name, $username, $passwd, $sex, $mail, $phone, $address)
+insert into category(c_name) VALUES('上衣'),('裙子'),('褲子');
+
