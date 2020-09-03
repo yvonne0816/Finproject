@@ -9,7 +9,7 @@ $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
 $sql = <<<qlc
-    select * from member where m_username!='kl123'
+    select * from member
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗");
 	
@@ -116,21 +116,20 @@ if (isset($_GET["logout"]))
 				<?php while($row = mysqli_fetch_assoc( $result )):?>
 				<form method="POST" action="memberauth.php?m_id=<?=$row['m_id']?>">
 				<div class="col-md-4 prod  animate-box">
-					<!-- <div class="product" style="background-image: url(images/prod-1.jpg);">
-					</div> -->
-					<h3>會員帳號：<?= $row['m_username']?></h3>
+					<h3>會員帳號：<?= $row['m_username'];if($row['m_username']=='kl123') echo "(管理者)";?></h3>
 					<span >使用者名字：<?= $row["m_name"]?></span><br>
                     <span >Email：<?= $row["m_email"]?></span><br>
                     <span >行動電話：<?= $row["m_phone"]?></span><br>
 					<span >地址：<?= $row["m_address"]?></span><br>
 					<!-- <span><input type="button" value="訂購資料" onClick="editproduct.php?m_id=<?=$row['m_id']?>"></span>></span> -->
-                    <span><input type="button" value="修改" id="edit"></span>
+                    <span><input type="button" value="修改" onclick="location.href='editmember.php?m_id=<?=$row['m_id']?>'"></span>
+					<?php if($row["m_username"]!='kl123'){?>
 					<span><input type="button" value="刪除" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=1'"></span>
 					<?php if($row["canuse"]==false){?>
 					<span><input type="button" value="啟動" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=2'"></span>
 					<?php } else { ?>
 					<span><input type="button" value="停用" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=3'"></span>
-					<?php }?>
+					<?php }}?>
 					<!-- <span ><input type="button" value="結帳" onclick="location.href='buy.php'"></span> -->
 				</div>
 				</form>

@@ -9,7 +9,7 @@ $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
 $sql = <<<qlc
-    select p_name,p_quantity,p_price,c.c_name,p_id,p_img from product p inner join category c on c.c_id=p.c_id
+    select p_name,p_quantity,p_price,c.c_name,p_id,p_img from product p inner join category c on c.c_id=p.c_id order by p_id desc
     qlc;
     $result = mysqli_query ( $link, $sql) or die("查詢失敗");
 
@@ -50,31 +50,15 @@ if (isset($_GET["logout"]))
 	<meta name="twitter:url" content="" />
 	<meta name="twitter:card" content="" />
 
-	<!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">	 -->
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 	
-	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="css/bootstrap.css">
-
-	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="css/magnific-popup.css">
-
-	<!-- Flexslider  -->
 	<link rel="stylesheet" href="css/flexslider.css">
-
-	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
 
 	</head>
 	<body>
@@ -91,26 +75,18 @@ if (isset($_GET["logout"]))
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
-							<!-- <li class="active"><a href="memanage.php">Home</a></li> -->
-							<!-- <li class="active"><a href="memanage.php">Home</a></li> -->
 							<li><a href="memanage.php">會員管理</a></li>
 							<li class="has-dropdown">
 								<a href="#">商品管理</a>
 									<ul class="dropdown">
 										<li><a href="promanage.php">商品總覽</a></li>
 										<li><a href="addproduct.php">增加商品</a></li>
-									<!-- <li><a href="#">eCommerce</a></li>
-									<li><a href="#">Branding</a></li>
-									<li><a href="#">API</a></li> -->
 								</ul>
 							</li>
 							<li class="has-dropdown"><span><a href="#"><?= $user ?></span></a>
 							<ul class="dropdown">
-									<!-- <li><a href="manager.php">會員管理</a></li>
-									<li><a href="addproduct.php">商品管理</a></li> -->
 									<li><a href="memanage.php?logout=1">Logout</a></li>
 								</ul></li>
-							<!-- <li><a href="promanage.php">商品管理</a></li> -->
 						</ul>
 					</div>
 				</div>
@@ -124,7 +100,7 @@ if (isset($_GET["logout"]))
 		<div class="container">
 		<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-					<h2>商品管理<h2>
+					<h2>商品總覽<h2>
 					<!-- <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> -->
 				</div>
 			</div>
@@ -135,7 +111,7 @@ if (isset($_GET["logout"]))
 				<div class="col-md-4 prod text-center animate-box">
 					<div class="product" style="background-image: url('<?= $row['p_img']?>');">
 					</div>
-					<h3>商品名：<a href="#"><?= $row['p_name']?></a></h3>
+					<h3><a href="#"><?= $row['p_name']?></a></h3>
 					<span >商品價格：<?= $row["p_price"]?>元</span><br>
 					<span >庫存量：<?= $row["p_quantity"]?></span><br>
 					<span > 總類：<?= $row["c_name"]?></span><br>

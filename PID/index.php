@@ -11,13 +11,13 @@ mysqli_select_db ( $link, $dbname );
 $c_id=$_GET["c_id"];
 if(isset($c_id)){
 	$sql = <<<qlc
-    select * from product p inner join category c on c.c_id=p.c_id where c.c_id=$c_id 
+    select * from product p inner join category c on c.c_id=p.c_id where c.c_id=$c_id order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗4");
 }
 else{
 $sql = <<<qlc
-    select * from product p inner join category c on c.c_id=p.c_id
+    select * from product p inner join category c on c.c_id=p.c_id order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗5");
 }
@@ -47,7 +47,6 @@ $dquantity = $_POST["dquantity"];
 		$result2 = mysqli_query ( $link, $sql2) or die("查詢失敗1");
 		$row = mysqli_fetch_assoc( $result2 );
 		$cid=$row['c_id'];
-		$p=$row['p_quantity'];
 		if(isset($dquantity)){
 			if($dquantity>$row["p_quantity"]){
 				echo "<script>alert('超過庫存量，請重新輸入'); location.href = 'index.php?c_id=$cid';</script>";
@@ -66,12 +65,6 @@ $dquantity = $_POST["dquantity"];
 				insert into dreamlist(d_quantity,p_id,m_id,buy) values($dquantity,$p_id,$fin,false) 
 			qlcw;
 			$result4 = mysqli_query ( $link, $sql4) or die("存取失敗3");
-
-			$sql3= <<<hiu
-				update product set p_quantity =($p-$dquantity) where p_id = $p_id;
-			hiu;
-
-			$result3 = mysqli_query ( $link, $sql3) or die("減失敗");
 
 			echo "<script>alert('加入購物車'); location.href = 'index.php';</script>";
 		}
@@ -155,23 +148,6 @@ $dquantity = $_POST["dquantity"];
 		</div>
 	</nav>
 
-	<!-- <aside id="fh5co-hero" class="js-fullheight">
-		<div class="flexslider js-fullheight">
-			<ul class="slides">
-		   	<li class="holder" style="background-image: url(images/img_bg_1.jpg);">
-		   		<div class="overlay-gradient"></div>
-		   		<div class="container">
-		   			<div class="col-md-10 col-md-offset-1 text-center js-fullheight slider-text">
-		   				<div class="slider-text-inner desc">
-		   					<h2 class="heading-section">Product</h2>
-		   					<p class="fh5co-lead">Designed with <i class="icon-heart3"></i> by the fine folks at <a href="http://freehtml5.co" target="_blank">FreeHTML5.co</a></p>
-		   				</div>
-		   			</div>
-		   		</div>
-		   	</li>
-		  	</ul>
-	  	</div>
-	</aside> -->
 	
 	<div id="fh5co-product">
 		<div class="container">

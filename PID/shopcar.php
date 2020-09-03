@@ -9,6 +9,8 @@ require ("config.php");
 $link = mysqli_connect ( $dbhost, $dbuser, $dbpass ) or die ( mysqli_connect_error() );
 $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
+
+$did=$_GET['d_id'];
 	
 if(isset($_POST['qBox']))
 $_SESSION['qBox'] = $_POST['qBox'];
@@ -30,15 +32,36 @@ if (isset($_GET["logout"]))
 $sql3 = <<<qlcw
 				select m_id from member where m_username='$user'
 			qlcw;
-			$result3 = mysqli_query ( $link, $sql3) or die("查詢失敗");
+			$result3 = mysqli_query ( $link, $sql3) or die("查詢失敗1");
 			$row3 = mysqli_fetch_assoc( $result3 );
 			$fin=$row3['m_id'];
 
 $sql = <<<qlcq
 	select p.p_name,d_quantity,p.p_price,d_id,p_img,(d_quantity*p.p_price) as total_price from dreamlist d inner join product p on d.p_id=p.p_id where (buy=false && m_id=$fin) order by d_id desc;
 	qlcq;
-$result = mysqli_query ( $link, $sql) or die("查詢失敗");
+$result = mysqli_query ( $link, $sql) or die("查詢失敗2");
 
+$upq=$_POST["updateq"];
+if(isset($upq)){
+	$sql4 = <<<qlcq
+		select * from product where p_id in (select p_id from dreamlist where d_id=$did)
+		qlcq;
+	$result4 = mysqli_query ( $link, $sql4) or die("查詢失敗3");
+	$row4 = mysqli_fetch_assoc($result4);
+	$q=$row4['p_quantity'];
+// echo $upq;
+// echo $did;
+if($q>=$upq){
+	$sql2=<<<qlcq
+	update dreamlist set  d_quantity=$upq where d_id=$did
+	qlcq;
+	$result2 = mysqli_query ( $link, $sql2) or die("更新失敗");
+	echo "<script>alert('更新成功'); location.href = 'shopcar.php';</script>";
+}
+else{
+	echo "<script>alert('庫存量為 $q 件，超過庫存量，請重新輸入'); location.href = 'shopcar.php';</script>";
+}
+}
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -52,15 +75,7 @@ $result = mysqli_query ( $link, $sql) or die("查詢失敗");
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
+
 
 	<!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">	 -->
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
@@ -186,11 +201,11 @@ $result = mysqli_query ( $link, $sql) or die("查詢失敗");
 							<h3><?=$row['p_name']?></h3>
 							<hr/>
 							<p>單價：<?=$row['p_price']?>元</p>
-							<p>數量：<?=$row['d_quantity']?>件</p>
+							<p>數量：<?=$row['d_quantity']?>件 <form method="POST" action="shopcar.php?d_id=<?= $row['d_id']?>"><input type="text" name="updateq" class="test" pattern="\d{1,5}" style="width:50px;"><input type="submit" name="submit" id="submit" value="更新" class="test"></form></p>
 							<p>總價：<?=$row['total_price']?>元</p>
 							<p>
 								<ul class="fh5co-social-icons">
-									<li><input type="button" value="修改" id="edit"></li>
+									<li><input type="button" value="修改" class="edit"></li>
 									<li><input type="button" value="刪除" onclick="location.href='deletelist.php?d_id=<?=$row['d_id']?>'"></li>
 									<li><input type="button" value="結帳" onclick="location.href='buy.php?d_id=<?=$row['d_id']?>'"></li>
 									<!-- <li><a href="#"><i class="icon-linkedin-with-circle"></i></a></li>
@@ -279,15 +294,12 @@ $result = mysqli_query ( $link, $sql) or die("查詢失敗");
 	
 	<script>
 	
-	$("#edit").click(function () {
-		$("#newsModal").modal( { backdrop: "static" } );
-		
-	})
-	
-	// $("#okButton").click(function){
-
-	// }
-
+	$(document).ready(function(){
+		$(".test").hide();
+      $(".edit").click(function(){
+        $(".test").toggle();
+      })
+    });
 
 	</script>
 

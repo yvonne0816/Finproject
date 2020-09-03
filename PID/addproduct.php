@@ -59,7 +59,7 @@ if(isset($_SESSION["userName"])){
 	<head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Ink &mdash; Free Website Template, Free HTML5 Template by freehtml5.co</title>
+	<title>Beauty &mdash; Happy Shopping</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
@@ -144,7 +144,7 @@ if(isset($_SESSION["userName"])){
 
 				<form id="form2" name="form2" method="post" action="addproduct.php" enctype="multipart/form-data">
 				<div class="col-md-4 prod   center animate-box">
-				<p>商品名稱:<input type="text" name="p_name" id="p_name" required="required"></p>
+				<p>商品名稱:<input type="text" name="p_name" id="p_name" placeholder="15字以內" required="required"></p>
 				<p>商品類別: <input type="radio" id="coat" name="girl" value="1">
 				<label for="coat">上衣</label>
 				<input type="radio" id="skirt" name="girl" value="2">

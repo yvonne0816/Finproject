@@ -17,7 +17,6 @@ $p_id=$_GET["p_id"];
     $result = mysqli_query ( $link, $sql) or die("查詢失敗");
 	$row = mysqli_fetch_assoc( $result );
 
-	$pid=$row['p_id'];
 	$pname =$_POST["p_name"];
 	$pprice = $_POST["p_price"];
 	$pquantity = $_POST["p_quantity"];
@@ -25,7 +24,7 @@ $p_id=$_GET["p_id"];
 
 	if(isset($cid)){
 	$sql2 = <<<qlc
-    update product set p_name='$pname',p_price=$pprice,p_quantity=$pquantity,c_id=$cid where p_id=$pid;
+    update product set p_name='$pname',p_price=$pprice,p_quantity=$pquantity,c_id=$cid where p_id=$p_id;
     qlc;
 	$result2 = mysqli_query ( $link, $sql2) or die("查詢失敗2");
 	echo "<script>alert('更新成功'); location.href = 'promanage.php';</script>";
@@ -125,20 +124,19 @@ if (isset($_GET["logout"]))
 		<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<h2>商品更新</h2>
-					<!-- <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> -->
 				</div>
 			</div>
 			<div class="row">
 			<div class="col-md-4 prod   center animate-box">
 			</div>
-				<form id="form2" name="form2" method="post" action="#" enctype="multipart/form-data">
+				<form id="form2" name="form2" method="post" action="" enctype="multipart/form-data">
 				<div class="col-md-4 prod   center animate-box">
-				<p>商品名稱:<input type="text" name="p_name" id="p_name" required="required" value="<?= $row['p_name']?>"></p>
-				<p>商品類別: <input type="radio" id="coat" name="girl" value="1" >
+				<p>商品名稱:<input type="text" name="p_name" id="p_name" placeholder="15字以內" required="required" value="<?= $row['p_name']?>"></p>
+				<p>商品類別: <input type="radio" id="coat" name="girl" value="1" required="required">
 				<label for="coat">上衣</label>
-				<input type="radio" id="skirt" name="girl" value="2">
+				<input type="radio" id="skirt" name="girl" value="2" required="required">
 				<label for="skirt">裙子</label>
-				<input type="radio" id="pants" name="girl" value="3">
+				<input type="radio" id="pants" name="girl" value="3" required="required">
 				<label for="pants">褲子</label></p>
 				<p>商品價格:<input type="text" name="p_price" id="p_price" value="<?= $row['p_price']?>" required="required"></p>
 				<p>商品數量: <input type="text" name="p_quantity" id="p_quantity" value="<?= $row['p_quantity']?>" required="required"></p>
