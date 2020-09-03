@@ -132,11 +132,11 @@ if (isset($_GET["logout"]))
 				<form id="form2" name="form2" method="post" action="" enctype="multipart/form-data">
 				<div class="col-md-4 prod   center animate-box">
 				<p>商品名稱:<input type="text" name="p_name" id="p_name" placeholder="15字以內" required="required" value="<?= $row['p_name']?>"></p>
-				<p>商品類別: <input type="radio" id="coat" name="girl" value="1" required="required">
+				<p>商品類別: <input type="radio" id="coat" name="girl" value="1" <?=($row['c_id']==1)?"checked":""?> required="required">
 				<label for="coat">上衣</label>
-				<input type="radio" id="skirt" name="girl" value="2" required="required">
+				<input type="radio" id="skirt" name="girl" value="2" <?=($row['c_id']==2)?"checked":""?> required="required">
 				<label for="skirt">裙子</label>
-				<input type="radio" id="pants" name="girl" value="3" required="required">
+				<input type="radio" id="pants" name="girl" value="3" <?=($row['c_id']==3)?"checked":""?> required="required">
 				<label for="pants">褲子</label></p>
 				<p>商品價格:<input type="text" name="p_price" id="p_price" value="<?= $row['p_price']?>" required="required"></p>
 				<p>商品數量: <input type="text" name="p_quantity" id="p_quantity" value="<?= $row['p_quantity']?>" required="required"></p>

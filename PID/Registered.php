@@ -16,8 +16,29 @@ $email = $_POST["email"];
 $phone = $_POST["phone"];
 $address = $_POST["address"];
 
+$sql2=<<<SqlQuery
+select m_email,m_username from member ;
+SqlQuery;
 
+
+$a=0;
+$b=0;
+$result2=mysqli_query($link,$sql2);
+while($row2=mysqli_fetch_assoc($result2)){
+	if($username==$row2['m_username']){
+		$error1="!帳號已被註冊!";
+		$a++;
+	}
+	if($email==$row2['m_email']){
+		$error2="!信箱已被註冊!";
+		$b++;
+	}
+}	
+
+// echo $a;
+// echo $b;
 if(isset($username)){
+if($a==0 && $b==0){
 $commandText = <<<SqlQuery
 insert into member(m_name, m_username, m_passwd, m_sex, m_email, m_phone, m_address) VALUES 
 ('$name', '$username', '$passwd', '$sex', '$email', '$phone', '$address')
@@ -25,9 +46,10 @@ SqlQuery;
 
 $result = mysqli_query ( $link, $commandText );
 echo "<script>alert('註冊成功'); location.href = 'login.php';</script>";
-//header("Location: login.php");
-//$row = mysqli_fetch_assoc ( $result );
-//mysqli_close($link);
+header("Location: login.php");
+$row = mysqli_fetch_assoc ( $result );
+mysqli_close($link);
+}
 }
 
 ?>
@@ -98,18 +120,24 @@ echo "<script>alert('註冊成功'); location.href = 'login.php';</script>";
 				<form method="POST" action="Registered.php">
 				<div class="col-md-4 prod animate-box">
 				<form id="form1" name="form1" method="post" action="Registered.php" onsubmit="return check()">
-				<p>姓名:    <input type="text" name="name" id="name" required="required"></p>
-				<p>帳號:    <input type="text" name="username" id="username" placeholder="只能包含數字或英文" required="required"></p>
-				<p>密碼:    <input type="password" name="password" id="password" pattern="\w{8,12}" placeholder="請輸入8~12個數字或英文" required="required" style="width:200px;"> <label onclick="show_pwd1()">  <input type="checkbox"> 顯示密碼</label></p>
-				<p>確認密碼: <input type="password" name="chpassword" id="chpassword" pattern="\w{8,12}" placeholder="請再輸入一次密碼" required="required" style="width:170px;"><label onclick="show_pwd2()">  <input type="checkbox"> 顯示密碼</label></p>
-				<p>性別:    <input type="radio" required="required" id="male" name="sex" value="男" checked >
+				<p>姓名:    <input type="text" name="name" id="name" value="<?=$name?>" required="required"></p>
+				<p>帳號:    <input type="text" name="username" id="username" value="<?=$username?>" placeholder="只能包含數字或英文" required="required"></p>
+				<?php if($a==1){?>
+				<p style="color:red;"><?=$error1?></p>
+				<?php }?>
+				<p>密碼:    <input type="password" name="password" id="password" value="<?=$_POST["password"]?>" pattern="\w{8,12}" placeholder="請輸入8~12個數字或英文" required="required" style="width:200px;"> <label onclick="show_pwd1()">  <input type="checkbox"> 顯示密碼</label></p>
+				<p>確認密碼: <input type="password" name="chpassword" id="chpassword" value="<?=$_POST["password"]?>" pattern="\w{8,12}" placeholder="請再輸入一次密碼" required="required" style="width:170px;"><label onclick="show_pwd2()">  <input type="checkbox"> 顯示密碼</label></p>
+				<p>性別:    <input type="radio" required="required" id="male" name="sex" value="男" <?=($sex=='男')?"checked":""?> >
 				  <label for="male">男</label>
-				  <input type="radio" required="required" id="female" name="sex" value="女" checked>
+				  <input type="radio" required="required" id="female" name="sex" value="女" <?=($sex=='女')?"checked":""?> >
 				  <label for="female">女</label>
 				</p>
-				<p>E-mail:  <input type="text" name="email" id="email" required="required" pattern="\w+([.-]\w+)*@\w+(.\w+)+"></p>
-				<p>行動電話: <input type="text" name="phone" id="phone" required="required" pattern="09\d{8}" placeholder="請輸入電話(如：09XXXXXXXX)"></p>
-				<p>地址:     <input type="text" name="address" required="required" id="address"></p>
+				<p>E-mail:  <input type="text" name="email" id="email" value="<?=$email?>" required="required" pattern="\w+([.-]\w+)*@\w+(.\w+)+"></p>
+				<?php if($a==2){?>
+				<p style="color:red;"><?=$error2?></p>
+				<?php }?>
+				<p>行動電話: <input type="text" name="phone" id="phone" value="<?=$phone?>" required="required" pattern="09\d{8}" placeholder="請輸入電話(如：09XXXXXXXX)"></p>
+				<p>地址:     <input type="text" name="address" required="required" value="<?=$address?>" id="address"></p>
 					<!-- <span ><input type="button" value="結帳" onclick="location.href='buy.php'"></span> -->
 				<p><input type="submit" name="submit" id="submit" value="註冊"></p>
 				</div>
@@ -189,7 +217,7 @@ echo "<script>alert('註冊成功'); location.href = 'login.php';</script>";
     function check(){
         var pwd1 = document.getElementById("password");
         var pwd2 = document.getElementById("chpassword");
-       if(pwd1.value != pwd2.value){
+       	if(pwd1.value != pwd2.value){
             window.alert("兩次密碼並不相同！");
             document.getElementById("password").focus();
             return false;
