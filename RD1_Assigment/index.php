@@ -29,42 +29,59 @@ mysqli_select_db ( $link, $dbname );
 <?php if(!isset($_POST['city'])){ ?>
 <div id="nowcity">台灣天氣</div>
 <div id='list'>
-<form name="form1" method="POST" action="index.php">        
-<select id="city" name="city" size="1">
-        <option>請選擇你的縣市</option>
-        <?php
-            $handle = fopen("https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-57C07FAB-F956-4AF9-8639-492D280DA675","rb");
-            $content = "";
-            while (!feof($handle)) {
-                $content .= fread($handle, 10000);
-            }
-            fclose($handle);
-            $content = json_decode($content,false);
-            foreach($content->records->location as $locate)
-            {
-                $c_name=$locate->locationName;
-                
-        ?>
-        <option value="<?=$c_name?>"><?=$c_name;}?></option>
-    </select>
-    <input class="button1" type="submit" name="nowcity" value="確認">
-    </div>
-    <?php }else{
-        $sql3="select c_img from city where c_name='$nowcity'";
-        $result3 = mysqli_query ( $link, $sql3 )or die ("3");
-        $row=mysqli_fetch_assoc($result3);
-        $img=$row['c_img'];
-    ?>
-        <img src="<?=$img?>" width="12.5%"><br>
-        <div id="nowcity"><?=$nowcity?></div><br>
-        <div id="choose">
-        <input class="button" type="button" name="nowcity" value="現在天氣" onclick="location.href='weather.php?ind=1'">
-        <input class="button" type="button" name="twocity" value="未來２天天氣" onclick="location.href='weather.php?ind=2'">
-        <input class="button" type="button" name="weekcity" value="未來１週天氣" onclick="location.href='weather.php?ind=3'">
-        <input class="button" type="button" name="hourrain" value="過去雨量" onclick="location.href='weather.php?ind=4'">
-        <input class="button" type="button" name="nowcity" value="重新選擇縣市" onclick="location.href='index.php'"><br>
-        </div>
-    <?php }?>
+    <form name="form1" method="POST" action="index.php">        
+        <select id="city" name="city" size="1">
+            <option>請選擇你的縣市</option>
+            <?php
+                $handle = fopen("https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-57C07FAB-F956-4AF9-8639-492D280DA675","rb");
+                $content = "";
+                while (!feof($handle)) {
+                    $content .= fread($handle, 10000);
+                }
+                fclose($handle);
+                $content = json_decode($content,false);
+                foreach($content->records->location as $locate)
+                {
+                    $c_name=$locate->locationName;
+                    
+            ?>
+            <option value="<?=$c_name?>"><?=$c_name;}?></option>
+        </select>
+        <input class="button1" type="submit" name="nowcity" value="確認">
+    </form>
+</div>
+<?php }else{
+    $sql3="select c_img from city where c_name='$nowcity'";
+    $result3 = mysqli_query ( $link, $sql3 )or die ("3");
+    $row=mysqli_fetch_assoc($result3);
+    $img=$row['c_img'];
+?>
+    <img src="<?=$img?>" width="12.5%"><br>
+    <div id="nowcity"><?=$nowcity?></div><br>
+    <div id="choose">
+    <input class="button" type="button" name="nowcity" value="現在天氣" onclick="location.href='weather.php?ind=1'">
+    <input class="button" type="button" name="twocity" value="未來２天天氣" onclick="location.href='weather.php?ind=2'">
+    <input class="button" type="button" name="weekcity" value="未來１週天氣" onclick="location.href='weather.php?ind=3'">
+    <input class="button" type="button" name="hourrain" value="過去雨量" onclick="location.href='weather.php?ind=4'">
+    <input class="button" type="button" name="nowcity" value="重新選擇縣市" onclick="location.href='index.php'"><br>
+<?php }?>
+
+<div id=text></div><br>
+
+<script type="text/javascript"> 
+    window.onload=function(){ 
+    setInterval(function(){ 
+        var date=new Date(); 
+        var year=date.getFullYear();
+        var mon=date.getMonth()+1;
+        var da=date.getDate();
+        var h=date.getHours();
+        var m=date.getMinutes();
+        var s=date.getSeconds();
+        var d=document.getElementById('text'); 
+        d.innerHTML=year+'/'+mon+'/'+da+' '+h+':'+m+':'+s; },1000) 
+    }
+</script>
 
 </body>
 </html>

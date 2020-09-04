@@ -58,23 +58,6 @@ mysqli_select_db ( $link, $dbname );
             }
             fclose($handle);
             $content = json_decode($content,false);
-            
-            // $sql2="drop table nowcity";
-            // $result2 = mysqli_query ( $link, $sql2 )or die ("2");
-            
-            // $sql3="CREATE TABLE `nowcity` (
-            //     `n_id` int(11) NOT NULL auto_increment,
-            //     `n_name` varchar(20) NOT NULL,
-            //     `n_wx` varchar(30) NOT NULL,
-            //     `n_pop` int(11) NOT NULL,
-            //     `n_minT` int(11) NOT NULL,
-            //     `n_maxT` int(11) NOT NULL,
-            //     `n_CI` varchar(50) NOT NULL,
-            //     `n_startTime` DATETIME NOT NULL,
-            //     `n_endTime` DATETIME NOT NULL,
-            //       PRIMARY KEY(n_id)
-            //   )";
-            // $result3 = mysqli_query ( $link, $sql3 )or die ("3");
 
             foreach($content->records->location as $i){
                 $n_name=($i->locationName);
@@ -106,7 +89,7 @@ mysqli_select_db ( $link, $dbname );
             }
         }
     }
-    if($ind==2){
+    else if($ind==2){
 ?>
     <div id='text'>未來２天天氣</div><br>
 <?php
@@ -118,19 +101,6 @@ mysqli_select_db ( $link, $dbname );
             }
             fclose($handle);
             $content = json_decode($content,false);
-            //var_dump($content);
-            // $sql2="drop table ftcity";
-            // $result2 = mysqli_query ( $link, $sql2 )or die ("2");
-            
-            // $sql3="CREATE TABLE `ftcity` (
-            //     `ft_id` int(11) NOT NULL auto_increment,
-            //     `ft_name` varchar(20) NOT NULL,
-            //     `ft_show` varchar(100) NOT NULL,
-            //     `ft_startTime` DATETIME NOT NULL,
-            //     `ft_endTime` DATETIME NOT NULL,
-            //         PRIMARY KEY(ft_id)
-            //   )";
-            // $result3 = mysqli_query ( $link, $sql3 )or die ("3");
             $a=0;
             $b=0;
             $c=0;
@@ -141,12 +111,11 @@ mysqli_select_db ( $link, $dbname );
                     if($a==0){
                         $sql3="select ft_starTtime from ftcity order by ft_starTtime desc limit 0,1";
                         $result3 = mysqli_query ( $link, $sql3 )or die ("2");
-                        $row = mysqli_fetch_assoc($result3);
-                        if(strtotime($start3)!=strtotime($row['ft_starTtime'])){
+                        $row3 = mysqli_fetch_assoc($result3);
+                        if(strtotime($start3)!=strtotime($row3['ft_starTtime'])){
                             $a=2;
                         }
                         else{
-                            $a=1;
                             $b=1;
                         }
                     }
@@ -158,8 +127,8 @@ mysqli_select_db ( $link, $dbname );
                             $ft_show=$start2->elementValue[0]->value;
                             $sql2="select ft_starTtime from ftcity where ft_name='$ft_name' order by ft_starTtime desc";
                             $result2 = mysqli_query ( $link, $sql2 )or die ("2");
-                            $row = mysqli_fetch_assoc($result2);
-                            if(strtotime($row['ft_starTtime'])!=strtotime($ft_startTime)){
+                            $row2 = mysqli_fetch_assoc($result2);
+                            if(strtotime($row2['ft_starTtime'])!=strtotime($ft_startTime)){
                                 $sql="insert into ftcity(ft_name,ft_startTime,ft_endTime,ft_show) values('$ft_name','$ft_startTime','$ft_endTime','$ft_show')";
                                 $result = mysqli_query ( $link, $sql )or die ("1");
                             }                        
@@ -174,10 +143,10 @@ mysqli_select_db ( $link, $dbname );
                     for($j=0;$j<24;$j++){
                         $start=($i->weatherElement[6]->time[$j]->startTime);
                         $end=($i->weatherElement[6]->time[$j]->endTime);
-                        $start1=($i->weatherElement[6]->time[$j]);
+                        $start1=($i->weatherElement[6]->time[$j]->elementValue[0]);
                         ?><div id="nowc"><?php
                         echo $start."~".$end."<br>";
-                        echo ($i->weatherElement[6]->description)."：".($start1->elementValue[0]->value)."<br>";
+                        echo ($i->weatherElement[6]->description)."：".($start1->value)."<br>";
                         ?></div><?php
                         // while($z<24){
                         //     $com=($i->weatherElement[1]->time[$z]);
@@ -214,7 +183,7 @@ mysqli_select_db ( $link, $dbname );
             }
         }
     }
-    if($ind==3){
+    else if($ind==3){
 ?>
     <div id='text'>未來１週天氣</div><br>
 <?php
@@ -250,12 +219,11 @@ mysqli_select_db ( $link, $dbname );
                     if($a==0){
                         $sql3="select fw_starTtime from fwcity order by fw_starTtime desc limit 0,1";
                         $result3 = mysqli_query ( $link, $sql3 )or die ("2");
-                        $row = mysqli_fetch_assoc($result3);
-                        if(strtotime($start3)!=strtotime($row['fw_starTtime'])){
+                        $row3 = mysqli_fetch_assoc($result3);
+                        if(strtotime($start3)!=strtotime($row3['fw_starTtime'])){
                             $a=2;
                         }
                         else{
-                            $a=1;
                             $b=1;
                         }
                     }
@@ -268,8 +236,8 @@ mysqli_select_db ( $link, $dbname );
                             $fw_show=$start2->elementValue[0]->value;
                             $sql2="select fw_starTtime from fwcity where fw_name='$fw_name' order by fw_starTtime desc";
                             $result2 = mysqli_query ( $link, $sql2 )or die ("2");
-                            $row = mysqli_fetch_assoc($result2);
-                            if(strtotime($row['fw_starTtime'])!=strtotime($fw_startTime)){
+                            $row2 = mysqli_fetch_assoc($result2);
+                            if(strtotime($row2['fw_starTtime'])!=strtotime($fw_startTime)){
                                 $sql="insert into fwcity(fw_name,fw_startTime,fw_endTime,fw_show) values('$fw_name','$fw_startTime','$fw_endTime','$fw_show')";
                                 $result = mysqli_query ( $link, $sql )or die ("1");
                             }                        
@@ -298,7 +266,7 @@ mysqli_select_db ( $link, $dbname );
             }
         }
     }
-    if($ind==4){
+    else if($ind==4){
 ?>
         <div id='text'>過去雨量</div><br>
 <?php
@@ -373,17 +341,17 @@ mysqli_select_db ( $link, $dbname );
 ?>
 
 <script type="text/javascript"> 
-window.onload=function(){ 
-setInterval(function(){ 
-var date=new Date(); 
-var year=date.getFullYear(); //獲取當前年份 
-var mon=date.getMonth()+1; //獲取當前月份 
-var da=date.getDate(); //獲取當前日 
-var h=date.getHours(); //獲取小時 
-var m=date.getMinutes(); //獲取分鐘 
-var s=date.getSeconds(); //獲取秒 
-var d=document.getElementById('text'); 
-d.innerHTML=year+'/'+mon+'/'+da+' '+h+':'+m+':'+s; },1000) }
+    window.onload=function(){ 
+    setInterval(function(){ 
+    var date=new Date(); 
+    var year=date.getFullYear();
+    var mon=date.getMonth()+1;
+    var da=date.getDate();
+    var h=date.getHours();
+    var m=date.getMinutes();
+    var s=date.getSeconds();
+    var d=document.getElementById('text'); 
+    d.innerHTML=year+'/'+mon+'/'+da+' '+h+':'+m+':'+s; },1000) }
 </script>
 </body>
 </html>

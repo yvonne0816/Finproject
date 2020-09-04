@@ -49,8 +49,6 @@ $sql = <<<qlc
             </div>
             <section>				
                 <div id="container_demo" >
-                    <a class="hiddenanchor" id="toregister"></a>
-                    <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form">
                             <form  method="POST" action="" autocomplete="on"> 
@@ -69,32 +67,6 @@ $sql = <<<qlc
                                 <p class="change_link">
 									Not a member yet ?
 									<a href="registered.php" class="to_register">Join us</a>
-								</p>
-                            </form>
-                        </div>
-
-                        <div id="register" class="animate form">
-                            <form  action="" autocomplete="on"> 
-                                <h1> Sign up </h1> 
-                                <p> 
-                                    <label for="usernamesignup" class="uname" data-icon="u">Your username</label>
-                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" />
-                                </p>
-                                <p> 
-                                    <label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
-                                    <input id="emailsignup" name="emailsignup" required="required" type="email" /> 
-                                </p>
-                                <p> 
-                                    <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
-                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password"/>
-                                </p>
-                                <p> 
-                                    <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
-                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" />
-                                </p>
-                                <p class="signin button"> 
-									<input type="submit" value="Sign up"/> 
-								</p>
 								</p>
                             </form>
                         </div>
