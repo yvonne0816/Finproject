@@ -15,14 +15,13 @@ $sql = <<<qlc
 	
 
   if(isset($_SESSION["userName"])){
-  $user=$_SESSION["userName"];
-}
+	$manage=$_SESSION["userName"];}
   else{
-  $user="Guest";
+	$manage="Guest";
 }
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($manage);
 	header("Location: index.php");
 	exit();
 }
@@ -39,16 +38,6 @@ if (isset($_GET["logout"]))
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
-
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
 
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 	<link rel="stylesheet" href="css/animate.css">
@@ -73,25 +62,18 @@ if (isset($_GET["logout"]))
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
-							<!-- <li class="active"><a href="memanage.php">Home</a></li> -->
 							<li><a href="memanage.php">會員管理</a></li>
 							<li class="has-dropdown">
 								<a href="#">商品管理</a>
 									<ul class="dropdown">
 										<li><a href="promanage.php">商品總覽</a></li>
 										<li><a href="addproduct.php">增加商品</a></li>
-									<!-- <li><a href="#">eCommerce</a></li>
-									<li><a href="#">Branding</a></li>
-									<li><a href="#">API</a></li> -->
 								</ul>
 							</li>
-							<li class="has-dropdown"><span><a href="#"><?= $user ?></span></a>
+							<li class="has-dropdown"><span><a href="#"><?= $manage ?></span></a>
 							<ul class="dropdown">
-									<!-- <li><a href="manager.php">會員管理</a></li>
-									<li><a href="addproduct.php">商品管理</a></li> -->
 									<li><a href="memanage.php?logout=1">Logout</a></li>
 								</ul></li>
-							<!-- <li><a href="promanage.php">商品管理</a></li> -->
 							
 						</ul>
 					</div>
@@ -108,7 +90,6 @@ if (isset($_GET["logout"]))
 		<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<h2>會員管理<h2>
-					<!-- <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> -->
 				</div>
 			</div>
 			<div class="row">
@@ -130,7 +111,6 @@ if (isset($_GET["logout"]))
 					<?php } else { ?>
 					<span><input type="button" value="停用" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=3'"></span>
 					<?php }}?>
-					<!-- <span ><input type="button" value="結帳" onclick="location.href='buy.php'"></span> -->
 				</div>
 				</form>
 				<?php endwhile ?>

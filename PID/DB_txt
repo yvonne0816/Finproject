@@ -16,7 +16,6 @@ CREATE TABLE `member` (
 );
 
 
-
 CREATE TABLE `category` (
   `c_id` int(11) NOT NULL auto_increment,
   `c_name` varchar(10) NOT NULL,

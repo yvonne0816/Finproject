@@ -11,16 +11,18 @@ $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
 $did=$_GET['d_id'];
-	
-if(isset($_POST['qBox']))
-$_SESSION['qBox'] = $_POST['qBox'];
 
   if(isset($_SESSION["userName"])){
   $user=$_SESSION["userName"];
+  $sql=<<<hiu
+	select canuse from member where m_username=$user
+hiu;
+	$row=(mysqli_fetch_assoc(mysqli_query($link,$sql)));
 }
   else{
   $user="Guest";
 }
+
 if (isset($_GET["logout"]))
 {
 	unset($_SESSION["userName"]);
@@ -76,67 +78,20 @@ else{
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
 
-
-	<!-- <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,500,700,800" rel="stylesheet">	 -->
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
-	
-	<!-- Animate.css -->
 	<link rel="stylesheet" href="css/animate.css">
-	<!-- Icomoon Icon Fonts-->
 	<link rel="stylesheet" href="css/icomoon.css">
-	<!-- Bootstrap  -->
 	<link rel="stylesheet" href="css/bootstrap.css">
-
-	<!-- Magnific Popup -->
 	<link rel="stylesheet" href="css/magnific-popup.css">
-
-	<!-- Flexslider  -->
 	<link rel="stylesheet" href="css/flexslider.css">
-
-	<!-- Theme style  -->
 	<link rel="stylesheet" href="css/style.css">
-
-	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
-	<!-- FOR IE9 below -->
-	<!--[if lt IE 9]>
-	<script src="js/respond.min.js"></script>
-	<![endif]-->
+
 
 	</head>
 	<body>
 		
-	<!-- <div id="newsModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4>修改</h4>
-                </div>
-                <div class="modal-body">
-                    <form method="POST">
-                        <div class="form-group">
-                            <label for="titleTextBox">
-                                <span class="glyphicon glyphicon-bullhorn"></span>
-                                數量
-                            </label>
-                            <input type="text" id="qBox" name="qBox" class="form-control" placeholder="請輸入數字" />
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="pull-right">
-                        <button type="button" id="okButton" class="btn btn-success">
-                            <span class="glyphicon glyphicon-ok"></span> 確定
-                        </button>
-                        <button type="button" id="cancelButton" class="btn btn-default" data-dismiss="modal">
-                            <span class="glyphicon glyphicon-remove"></span> 取消
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
 
 
 	<div class="fh5co-loader"></div>
@@ -206,10 +161,8 @@ else{
 							<p>
 								<ul class="fh5co-social-icons">
 									<li><input type="button" value="修改" class="edit"></li>
-									<li><input type="button" value="刪除" onclick="location.href='deletelist.php?d_id=<?=$row['d_id']?>'"></li>
-									<li><input type="button" value="結帳" onclick="location.href='buy.php?d_id=<?=$row['d_id']?>'"></li>
-									<!-- <li><a href="#"><i class="icon-linkedin-with-circle"></i></a></li>
-									<li><a href="#"><i class="icon-dribbble-with-circle"></i></a></li> -->
+									<li><input type="button" value="刪除" onclick="location.href='action.php?d_id=<?=$row['d_id']?> && id=1'"></li>
+									<li><input type="button" value="結帳" onclick="location.href='action.php?d_id=<?=$row['d_id']?> && id=2'"></li>
 								</ul>
 							</p>
 						</div>

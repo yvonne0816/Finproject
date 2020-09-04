@@ -31,6 +31,13 @@ else if($hi==3){
     hiu;
 
     $result = mysqli_query ( $link, $sql3) or die("刪除失敗3");
+    
+    // $sql4=<<<hiu
+    // select m_username from member where m_id=$m_id;
+    // hiu;
+    // $row4=(mysqli_fetch_assoc(mysqli_query($link,$sql4)));
+    // unset($row4['m_username']);
+
     header("location:memanage.php");
 }
 

@@ -1,5 +1,5 @@
 <?php
-  session_start();
+session_start();
 
 header("Content-type: text/html; charset=utf-8");
 require ("config.php");
@@ -9,7 +9,19 @@ $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
 $p_id=$_GET["p_id"];
-//echo $p_id;
+
+
+if(isset($_SESSION["userName"])){
+	$manage=$_SESSION["userName"];
+}
+else{
+	header("Location: index.php");
+}
+if(isset($_GET["logout"])){
+	unset($manage);
+	header("Location: index.php");
+	exit();
+}
 
 	$sql = <<<qlc
     select * from product where p_id=$p_id;
@@ -30,21 +42,6 @@ $p_id=$_GET["p_id"];
 	echo "<script>alert('更新成功'); location.href = 'promanage.php';</script>";
 	}
 	
-
-  if(isset($_SESSION["userName"])){
-  $user=$_SESSION["userName"];
-}
-  else{
-  $user="Guest";
-}
-if (isset($_GET["logout"]))
-{
-	unset($_SESSION["userName"]);
-	header("Location: index.php");
-	exit();
-}
-
-	
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -57,15 +54,6 @@ if (isset($_GET["logout"]))
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
 
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 	
 
@@ -102,7 +90,7 @@ if (isset($_GET["logout"]))
 
 								</ul>
 							</li>
-							<li class="has-dropdown"><span><a href="#"><?= $user ?></span></a>
+							<li class="has-dropdown"><span><a href="#"><?= $manage ?></span></a>
 							<ul class="dropdown">
 
 									<li><a href="memanage.php?logout=1">Logout</a></li>

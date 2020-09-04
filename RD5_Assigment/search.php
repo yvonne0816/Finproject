@@ -10,16 +10,16 @@ mysqli_select_db ( $link, $dbname );
 
 $id=$_GET["id"];
 
-$user=$_SESSION["userName"];
+$u=$_SESSION["buname"];
 
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($_SESSION["buname"]);
 	header("Location: index.php");
 	exit();
 }
 
-$sql2="select total_money,m_id from member where m_username='$user'";
+$sql2="select total_money,m_id from member where m_username='$u'";
 $result2=mysqli_query($link,$sql2)or die ("2");
 $row2=mysqli_fetch_assoc($result2);
 $tot=$row2['total_money'];
@@ -91,7 +91,14 @@ if($id==3){
 									<li><a href="search.php?id=3">查詢餘額明細</a></li>
 								</ul>
 							</li>
-							<li class="btn-cta"><a href="index.php"><span>Logout</span></a></li>
+							<?php if($u!="Guest"){?>
+							<li class="has-dropdown"><a href="#"><span><?= $u?></span></a>
+							<ul class="dropdown">
+									<li><a href="index.php?logout=1">Logout</a></li>
+							</ul></li>
+							<?php }else{ 
+								header("location:login.php");
+							}?>	
 						</ul>
 					</div>
 				</div>

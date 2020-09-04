@@ -24,29 +24,17 @@ if(isset($pname)){
     
     $result2 = mysqli_query ( $link, $cot )or die("新增失敗");;
     echo "<script>alert('上傳成功');</script>";
-    //header("Location: login.php");
-    //$row = mysqli_fetch_assoc ( $result );
-    //mysqli_close($link);
     }
 
-// $file = fopen($_FILES["upfile"]["tmp_name"], "rb");
-// $fileContents = fread($file, filesize($_FILES["upfile"]["tmp_name"])); 
-// fclose($file);
-//   $fileContents = base64_encode($fileContents);
-
-
-//   $SQLSTR="Insert into product (p_img) values('". $_FILES["upfile"]["name"] . "')";
-//   $result = mysqli_query ( $link, $SQLSTR);
-
 if(isset($_SESSION["userName"])){
-    $user=$_SESSION["userName"];
+    $manage=$_SESSION["userName"];
   }
     else{
-    $user="Guest";
+		$manage="Guest";
   }
   if (isset($_GET["logout"]))
   {
-      unset($_SESSION["userName"]);
+      unset($manage);
       header("Location: index.php");
       exit();
   }
@@ -99,24 +87,17 @@ if(isset($_SESSION["userName"])){
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
-							<!-- <li class="active"><a href="index.php">Home</a></li> -->
 							<li><a href="memanage.php">會員管理</a></li>
 							<li class="has-dropdown">
 								<a href="#">商品管理</a>
 								<ul class="dropdown">
 									<li><a href="promanage.php">商品總覽</a></li>
 									<li><a href="addproduct.php">增加商品</a></li>
-									<!-- <li><a href="#">eCommerce</a></li>
-									<li><a href="#">Branding</a></li>
-									<li><a href="#">API</a></li> -->
 								</ul>
 							</li>
-							<!-- <li><a href="promanage.php">商品管理</a></li> -->
-							<li class="has-dropdown"><span><a href="#"><?= $user ?></span></a>
+							<li class="has-dropdown"><span><a href="#"><?= $manage ?></span></a>
 							<ul class="dropdown">
-									<!-- <li><a href="manager.php">會員管理</a></li>
-									<li><a href="addproduct.php">商品管理</a></li> -->
-									<li><a href="mamanage.php?logout=1">Logout</a></li>
+									<li><a href="addproduct.php?logout=1">Logout</a></li>
 								</ul></li>
 						</ul>
 					</div>
@@ -133,12 +114,10 @@ if(isset($_SESSION["userName"])){
 		<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<h2>增加商品<h2>
-					<!-- <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> -->
 				</div>
 			</div>
 			<div class="row text-center">
 			<div class="col-md-4 prod text-center animate-box">
-					<!-- <span ><input type="button" value="結帳" onclick="location.href='buy.php'"></span> -->
 				</div>
 
 
@@ -159,7 +138,6 @@ if(isset($_SESSION["userName"])){
 				</form>
 
 				<div class="col-md-4 prod text-center animate-box">
-					<!-- <span ><input type="button" value="結帳" onclick="location.href='buy.php'"></span> -->
 				</div>
 				
 			</div>

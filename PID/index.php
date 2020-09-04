@@ -11,13 +11,13 @@ mysqli_select_db ( $link, $dbname );
 $c_id=$_GET["c_id"];
 if(isset($c_id)){
 	$sql = <<<qlc
-    select * from product p inner join category c on c.c_id=p.c_id where c.c_id=$c_id order by p_id desc
+    select * from product p inner join category c on c.c_id=p.c_id where (c.c_id=$c_id && p_quantity>0) order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗4");
 }
 else{
 $sql = <<<qlc
-    select * from product p inner join category c on c.c_id=p.c_id order by p_id desc
+    select * from product p inner join category c on c.c_id=p.c_id where p_quantity>0 order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗5");
 }
@@ -81,16 +81,6 @@ $dquantity = $_POST["dquantity"];
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
 
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
-
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 	
 	<link rel="stylesheet" href="css/animate.css">
@@ -128,13 +118,13 @@ $dquantity = $_POST["dquantity"];
 								</ul>
 							</li>
 							<!-- <li><a href="about.php">About</a></li> -->
-							<?php if($user=="Guest" || $_SESSION[$a]==1){ ?>
+							<?php if($user=="Guest" || $user=="kl123"){ ?>
 							<li class="btn-cta"><a href="Login.php"><span>Login</span></a></li>
 							<?php } else{ ?>
 							<li class="has-dropdown"><a href="#"><span><?= $user ?></span></a>
 							<ul class="dropdown">
 									<li><a href="shopcar.php">購物車</a></li>
-									<li><a href=" finbuy.php">購買歷史紀錄</a></li>
+									<li><a href="finbuy.php">購買歷史紀錄</a></li>
 									<!-- <li><a href="#">會員資料</a></li> -->
 									<li><a href="index.php?logout=1">Logout</a></li>
 								</ul></li>
@@ -176,7 +166,7 @@ $dquantity = $_POST["dquantity"];
 					<span ><?= $row["p_price"]?>元</span><br>
 					<span >庫存量：<?= $row["p_quantity"]?></span><br>
 					<span > 種類：<?= $row["c_name"]?></span><br>
-					<?php if($user!="Guest"){ ?>
+					<?php if($user!="Guest" && $user!="kl123"){ ?>
 					<span >數量：<input type="text" name="dquantity" id="dquantity" required="required" style="width: 75px;"></span>
 					<span ><input type="submit" name="submit" id="submit" value="加入購物車" style="width: 100px;"></span>
 					<?php } ?>

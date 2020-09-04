@@ -65,16 +65,6 @@ mysqli_close($link);
 	<meta name="description" content="Free HTML5 Website Template by freehtml5.co" />
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
-
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 	
 	<link rel="stylesheet" href="css/animate.css">
@@ -133,7 +123,7 @@ mysqli_close($link);
 				  <label for="female">女</label>
 				</p>
 				<p>E-mail:  <input type="text" name="email" id="email" value="<?=$email?>" required="required" pattern="\w+([.-]\w+)*@\w+(.\w+)+"></p>
-				<?php if($a==2){?>
+				<?php if($b==1){?>
 				<p style="color:red;"><?=$error2?></p>
 				<?php }?>
 				<p>行動電話: <input type="text" name="phone" id="phone" value="<?=$phone?>" required="required" pattern="09\d{8}" placeholder="請輸入電話(如：09XXXXXXXX)"></p>

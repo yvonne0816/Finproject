@@ -7,19 +7,19 @@ $link = mysqli_connect ( $dbhost, $dbuser, $dbpass ) or die ( mysqli_connect_err
 $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
-$username = $_POST["username"];
+$uname = $_POST["username"];
 $password = hash('sha256', $_POST["password"]);
 //echo($password);
-if(isset($username)){
+if(isset($uname)){
 $sql = <<<qlc
-    select * from member where m_username = "$username" and m_passwd="$password"
+    select * from member where m_username = "$uname" and m_passwd="$password"
     qlc;
     $result = mysqli_query ( $link, $sql) or die("查詢失敗");
     $row = mysqli_fetch_assoc( $result );
     //var_dump($row);
     if($row){
         
-        $_SESSION["userName"]=$username;
+        $_SESSION["buname"]=$uname;
         header("location:content.php");
     }
     else {
@@ -78,19 +78,19 @@ $sql = <<<qlc
                                 <h1> Sign up </h1> 
                                 <p> 
                                     <label for="usernamesignup" class="uname" data-icon="u">Your username</label>
-                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" placeholder="mysuperusername690" />
+                                    <input id="usernamesignup" name="usernamesignup" required="required" type="text" />
                                 </p>
                                 <p> 
                                     <label for="emailsignup" class="youmail" data-icon="e" > Your email</label>
-                                    <input id="emailsignup" name="emailsignup" required="required" type="email" placeholder="mysupermail@mail.com"/> 
+                                    <input id="emailsignup" name="emailsignup" required="required" type="email" /> 
                                 </p>
                                 <p> 
                                     <label for="passwordsignup" class="youpasswd" data-icon="p">Your password </label>
-                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                    <input id="passwordsignup" name="passwordsignup" required="required" type="password"/>
                                 </p>
                                 <p> 
                                     <label for="passwordsignup_confirm" class="youpasswd" data-icon="p">Please confirm your password </label>
-                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                                    <input id="passwordsignup_confirm" name="passwordsignup_confirm" required="required" type="password" />
                                 </p>
                                 <p class="signin button"> 
 									<input type="submit" value="Sign up"/> 

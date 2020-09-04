@@ -8,15 +8,15 @@ $link = mysqli_connect ( $dbhost, $dbuser, $dbpass ) or die ( mysqli_connect_err
 $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
-  if(isset($_SESSION["userName"])){
-  $user=$_SESSION["userName"];
+  if(isset($_SESSION["buname"])){
+  $u=$_SESSION["buname"];
 }
   else{
-  $user="Guest";
+  $u="Guest";
 }
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($_SESSION["buname"]);
 	header("Location: index.php");
 	exit();
 }
@@ -76,8 +76,11 @@ if (isset($_GET["logout"]))
 							<!-- <li class="active"><a href="index.php">Home</a></li> -->
 							<!-- <li><a href="index.php">產品</a></li> -->
 							<!-- <li><a href="about.php">About</a></li> -->
-							<?php if($user!="Guest"){?>
-							<li class="btn-cta"><a href="index.php"><span>Logout</span></a></li>
+							<?php if($u!="Guest"){?>
+							<li class="has-dropdown"><a href="#"><span><?= $u?></span></a>
+							<ul class="dropdown">
+									<li><a href="index.php?logout=1">Logout</a></li>
+							</ul></li>
 							<?php }else{ 
 								header("location:login.php");
 							}?>							

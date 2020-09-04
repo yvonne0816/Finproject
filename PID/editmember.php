@@ -11,35 +11,49 @@ mysqli_select_db ( $link, $dbname );
 $m_id=$_GET["m_id"];
 //echo $p_id;
 
-	$sql = <<<qlc
+$sql = <<<qlc
     select * from member where m_id=$m_id;
-    qlc;
-    $result = mysqli_query ( $link, $sql) or die("查詢失敗");
-    $row = mysqli_fetch_assoc( $result );
-    
-    $mname =$_POST["name"];
-    $memail =$_POST["email"];
-    $mphone =$_POST["phone"];
-	$maddress = $_POST["address"];
+qlc;
+$result = mysqli_query ( $link, $sql) or die("查詢失敗");
+$row = mysqli_fetch_assoc( $result );
 
-	if(isset($maddress)){
+$mname =$_POST["name"];
+$memail =$_POST["email"];
+$mphone =$_POST["phone"];
+$maddress = $_POST["address"];
+
+if(isset($maddress)){
+$sql2=<<<SqlQuery
+	select m_email from member where m_id!=$m_id;
+SqlQuery;
+$a=0;
+$result2=mysqli_query($link,$sql2);
+while($row2=mysqli_fetch_assoc($result2)){
+	if($memail==$row2['m_email']){
+		$error2="!信箱已被註冊!";
+		$a++;
+	}
+}
+
+if($a==0){
 	$sql2 = <<<qlc
-    update member set m_name='$mname',m_email='$memail',m_phone='$mphone',m_address='$maddress' where m_id=$m_id;
-    qlc;
+		update member set m_name='$mname',m_email='$memail',m_phone='$mphone',m_address='$maddress' where m_id=$m_id;
+	qlc;
 	$result2 = mysqli_query ( $link, $sql2) or die("查詢失敗2");
 	echo "<script>alert('更新成功'); location.href = 'memanage.php';</script>";
-	}
+}
+}
 	
 
-  if(isset($_SESSION["userName"])){
-  $user=$_SESSION["userName"];
+if(isset($_SESSION["userName"])){
+	$manage=$_SESSION["userName"];
 }
-  else{
-  $user="Guest";
+else{
+	$manage="Guest";
 }
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($manage);
 	header("Location: index.php");
 	exit();
 }
@@ -57,15 +71,6 @@ if (isset($_GET["logout"]))
 	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
 	<meta name="author" content="freehtml5.co" />
 
-	<meta property="og:title" content=""/>
-	<meta property="og:image" content=""/>
-	<meta property="og:url" content=""/>
-	<meta property="og:site_name" content=""/>
-	<meta property="og:description" content=""/>
-	<meta name="twitter:title" content="" />
-	<meta name="twitter:image" content="" />
-	<meta name="twitter:url" content="" />
-	<meta name="twitter:card" content="" />
 	<link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
 	
 
@@ -133,6 +138,9 @@ if (isset($_GET["logout"]))
 				<div class="col-md-4 prod   center animate-box">
 				<p>使用者名字:<input type="text" name="name" id="name" value="<?= $row['m_name']?>" required="required"></p>
 				<p>Email:<input type="text" name="email" id="email" value="<?= $row['m_email']?>" required="required" pattern="\w+([.-]\w+)*@\w+(.\w+)+"></p>
+				<?php if($a==1){?>
+				<p style="color:red;"><?=$error2?></p>
+				<?php }?>
 				<p>行動電話:<input type="text" name="phone" id="phone" value="<?= $row['m_phone']?>" required="required" pattern="09\d{8}" placeholder="請輸入電話(如：09XXXXXXXX)"></p>
                 <p>地址:<input type="text" name="address" required="required" id="address" value="<?= $row['m_address']?>"></p>
 				<p><input type="submit" name="submit" id="submit" value="送出"></p>

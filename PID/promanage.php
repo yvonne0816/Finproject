@@ -8,25 +8,35 @@ $link = mysqli_connect ( $dbhost, $dbuser, $dbpass ) or die ( mysqli_connect_err
 $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
-$sql = <<<qlc
-    select p_name,p_quantity,p_price,c.c_name,p_id,p_img from product p inner join category c on c.c_id=p.c_id order by p_id desc
-    qlc;
-    $result = mysqli_query ( $link, $sql) or die("查詢失敗");
-
-
-  if(isset($_SESSION["userName"])){
-  $user=$_SESSION["userName"];
+if(isset($_SESSION["userName"])){
+	$manage=$_SESSION["userName"];
 }
-  else{
-  $user="Guest";
-}
+
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($manage);
 	header("Location: index.php");
 	exit();
 }
 
+$id=$_GET['id'];
+
+if(isset($id)){
+	if($id==1)
+	$p_id=$_GET["p_id"];
+	$sql= <<<hiu
+		delete from product where p_id=$p_id
+	hiu;
+	
+	$result = mysqli_query ( $link, $sql) or die("刪除失敗");
+	header("location:promanage.php");
+}
+else{
+$sql = <<<qlc
+    select p_name,p_quantity,p_price,c.c_name,p_id,p_img from product p inner join category c on c.c_id=p.c_id order by p_id desc
+    qlc;
+	$result = mysqli_query ( $link, $sql) or die("查詢失敗");
+}
 	
 ?>
 <!DOCTYPE HTML>
@@ -83,7 +93,7 @@ if (isset($_GET["logout"]))
 										<li><a href="addproduct.php">增加商品</a></li>
 								</ul>
 							</li>
-							<li class="has-dropdown"><span><a href="#"><?= $user ?></span></a>
+							<li class="has-dropdown"><span><a href="#"><?= $manage ?></span></a>
 							<ul class="dropdown">
 									<li><a href="memanage.php?logout=1">Logout</a></li>
 								</ul></li>
@@ -116,7 +126,7 @@ if (isset($_GET["logout"]))
 					<span >庫存量：<?= $row["p_quantity"]?></span><br>
 					<span > 總類：<?= $row["c_name"]?></span><br>
                     <span><input type="button" value="修改" onclick="location.href='editproduct.php?p_id=<?=$row['p_id']?>'"></span>
-					<span><input type="button" value="刪除" onclick="location.href='deleteproduct.php?p_id=<?=$row['p_id']?>'"></span>
+					<span><input type="button" value="刪除" onclick="location.href='promanage.php?p_id=<?=$row['p_id']?> && id=1'"></span>
 					<!-- <span ><input type="button" value="結帳" onclick="location.href='buy.php'"></span> -->
 				</div>
 				</form>

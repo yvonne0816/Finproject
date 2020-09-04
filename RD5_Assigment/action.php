@@ -8,10 +8,10 @@ $link = mysqli_connect ( $dbhost, $dbuser, $dbpass ) or die ( mysqli_connect_err
 $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
-  $user=$_SESSION["userName"];
+  $u=$_SESSION["buname"];
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($_SESSION["buname"]);
 	header("Location: index.php");
 	exit();
 }
@@ -21,7 +21,7 @@ $money = $_POST["money"];
 
 if(isset($money)){
 
-	$sql="select m_id,total_money from member where m_username='$user'";
+	$sql="select m_id,total_money from member where m_username='$u'";
 	$result=mysqli_query($link,$sql)or die ("1");
 	$row=mysqli_fetch_assoc($result);
 	$_SESSION['mid']=$row['m_id'];
@@ -122,7 +122,14 @@ if(isset($money)){
 								</ul>
 							</li>
 							<!-- <li><a href="about.php">About</a></li> -->
-							<li class="btn-cta"><a href="index.php"><span>Logout</span></a></li>
+							<?php if($u!="Guest"){?>
+							<li class="has-dropdown"><a href="#"><span><?= $u?></span></a>
+							<ul class="dropdown">
+									<li><a href="index.php?logout=1">Logout</a></li>
+							</ul></li>
+							<?php }else{ 
+								header("location:login.php");
+							}?>	
 						</ul>
 					</div>
 				</div>

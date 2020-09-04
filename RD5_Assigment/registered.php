@@ -8,15 +8,15 @@ mysqli_select_db ( $link, $dbname );
 
 
 $name = $_POST["name"];
-$username = $_POST["username"];
+$uname = $_POST["username"];
 //$passwd =  hash("sha256",$_POST["password"]);
 $passwd = hash('sha256', $_POST["password"]);
 
 
 
-if(isset($username)){
+if(isset($uname)){
 $commandText = <<<SqlQuery
-insert into member(m_name, m_username, m_passwd) VALUES ('$name', '$username', '$passwd')
+insert into member(m_name, m_username, m_passwd) VALUES ('$name', '$uname', '$passwd')
 SqlQuery;
 
 $result = mysqli_query ( $link, $commandText );
