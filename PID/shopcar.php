@@ -156,7 +156,7 @@ else{
 							<h3><?=$row['p_name']?></h3>
 							<hr/>
 							<p>單價：<?=$row['p_price']?>元</p>
-							<p>數量：<?=$row['d_quantity']?>件 <form method="POST" action="shopcar.php?d_id=<?= $row['d_id']?>"><p class="test">數量：<input type="text" name="updateq" pattern="\d{1,5}" style="width:50px;"> <input type="submit" name="submit" id="submit" value="更新"></p></form></p>
+							<p>數量：<?=$row['d_quantity']?>件 <form method="POST" action="shopcar.php?d_id=<?= $row['d_id']?>"><p class="test">數量：<input type="text" name="updateq" pattern="\d{1,5}" placeholder=" >1" style="width:50px;"> <input type="submit" name="submit" id="submit" value="更新"></p></form></p>
 							<p>總價：<?=$row['total_price']?>元</p>
 							<p>
 								<ul class="fh5co-social-icons">

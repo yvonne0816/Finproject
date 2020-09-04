@@ -11,13 +11,13 @@ mysqli_select_db ( $link, $dbname );
 $c_id=$_GET["c_id"];
 if(isset($c_id)){
 	$sql = <<<qlc
-    select * from product where (c_id=$c_id && p_quantity>0) order by p_id desc
+    select p_name,p_img,p_quantity,p_price,c.c_name,c.c_id from product p inner join category c on c.c_id=p.c_id where c.c_id=$c_id  order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗4");
 }
 else{
 $sql = <<<qlc
-    select * from product where p_quantity>0 order by p_id desc
+    select  p_name,p_img,p_quantity,p_price,c.c_name from product p inner join category c on c.c_id=p.c_id order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗5");
 }
@@ -164,9 +164,12 @@ $dquantity = $_POST["dquantity"];
 					</div>
 					<h3><a href="#"><?= $row['p_name']?></a></h3>
 					<span ><?= $row["p_price"]?>元</span><br>
-					<span >庫存量：<?= $row["p_quantity"]?></span><br>
 					<span > 種類：<?= $row["c_name"]?></span><br>
-					<?php if($user!="Guest" && $user!="kl123"){ ?>
+
+					<?php if($row["p_quantity"]==0){?>
+					<span style="color:red;">缺貨中!<span><br>
+					<?php }elseif($user!="Guest" && $user!="kl123"){ ?>
+					<span >庫存量：<?= $row["p_quantity"]?></span><br>
 					<span >數量：<input type="text" name="dquantity" id="dquantity" required="required" style="width: 75px;"></span>
 					<span ><input type="submit" name="submit" id="submit" value="加入購物車" style="width: 100px;"></span>
 					<?php } ?>
@@ -184,20 +187,13 @@ $dquantity = $_POST["dquantity"];
 		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
 	</div>
 	
-	<!-- jQuery -->
 	<script src="js/jquery.min.js"></script>
-	<!-- jQuery Easing -->
 	<script src="js/jquery.easing.1.3.js"></script>
-	<!-- Bootstrap -->
 	<script src="js/bootstrap.min.js"></script>
-	<!-- Waypoints -->
 	<script src="js/jquery.waypoints.min.js"></script>
-	<!-- Flexslider -->
 	<script src="js/jquery.flexslider-min.js"></script>
-	<!-- Magnific Popup -->
 	<script src="js/jquery.magnific-popup.min.js"></script>
 	<script src="js/magnific-popup-options.js"></script>
-	<!-- Main -->
 	<script src="js/main.js"></script>
 
 	</body>

@@ -25,7 +25,7 @@ if(isset($id)){
 	if($id==1)
 	$p_id=$_GET["p_id"];
 	$sql= <<<hiu
-		delete from product where p_id=$p_id
+		delete from product where p_id=$p_id 
 	hiu;
 	
 	$result = mysqli_query ( $link, $sql) or die("刪除失敗");
