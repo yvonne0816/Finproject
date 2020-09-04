@@ -22,7 +22,7 @@ $sql = <<<qlc
         
         $_SESSION["userName"]=$username;
         if($_SESSION["userName"]=="kl123"){
-        header("location:memanage.php");
+        header("location:promanage.php");
         }
         else if($row['canuse']==true ){
         header("location:index.php");

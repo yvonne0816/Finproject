@@ -10,31 +10,26 @@ $link = mysqli_connect ( $dbhost, $dbuser, $dbpass ) or die ( mysqli_connect_err
 $result = mysqli_query ( $link, "set names utf8" );
 mysqli_select_db ( $link, $dbname );
 
+$m_id=$_GET["m_id"];
+
   if(isset($_SESSION["userName"])){
-  $user=$_SESSION["userName"];
+  $manage=$_SESSION["userName"];
 }
   else{
-  $user="Guest";
+  $manage="Guest";
 }
-
-$sql3 = <<<qlcw
-				select m_id from member where m_username='$user'
-			qlcw;
-			$result3 = mysqli_query ( $link, $sql3) or die("查詢失敗");
-			$row3 = mysqli_fetch_assoc( $result3 );
-			$fin=$row3['m_id'];
-
-$sql = <<<qlcq
-	select *,(d_quantity*p.p_price) as total_price from dreamlist d inner join product p on d.p_id=p.p_id  where (buy=true && m_id=$fin);
-	qlcq;
-$result = mysqli_query ( $link, $sql) or die("查詢失敗");
 
 if (isset($_GET["logout"]))
 {
-	unset($_SESSION["userName"]);
+	unset($manage);
 	header("Location: index.php");
 	exit();
 }
+
+$sql = <<<qlcq
+	select *,(d_quantity*p.p_price) as total_price from dreamlist d inner join product p on d.p_id=p.p_id  where (buy=true && m_id=$m_id);
+	qlcq;
+$result = mysqli_query ( $link, $sql) or die("查詢失敗");
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -71,31 +66,23 @@ if (isset($_GET["logout"]))
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="index.php">Beauty<span>.</span></a></div>
+						<div id="fh5co-logo"><a href="memanage.php">Beauty<span>.</span></a></div>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
-							<!-- <li class="active"><a href="index.php">Home</a></li> -->
+							<li><a href="memanage.php">會員管理</a></li>
 							<li class="has-dropdown">
-								<a href="index.php">產品</a>
-								<ul class="dropdown">
-									<li><a href="index.php?c_id=1">上衣</a></li>
-									<li><a href="index.php?c_id=2">裙子</a></li>
-									<li><a href="index.php?c_id=3">褲子</a></li>
-									<!-- <li><a href="#">API</a></li> -->
+								<a href="#">商品管理</a>
+									<ul class="dropdown">
+										<li><a href="promanage.php">商品總覽</a></li>
+										<li><a href="addproduct.php">增加商品</a></li>
 								</ul>
 							</li>
-							<?php if($user=="Guest"){ ?>
-							<li class="btn-cta"><a href="Login.php"><span>Login</span></a></li>
-							<?php } else{ ?>
-							<li class="has-dropdown"><a href="#"><span><?= $user ?></span></a>
+							<li class="has-dropdown"><span><a href="#"><?= $manage ?></span></a>
 							<ul class="dropdown">
-									<li><a href="shopcar.php">購物車</a></li>
-									<li><a href="finbuy.php">購買歷史紀錄</a></li>
-									<!-- <li><a href="#">會員資料</a></li> -->
-									<li><a href="index.php?logout=1">Logout</a></li>
+									<li><a href="memanage.php?logout=1">Logout</a></li>
 								</ul></li>
-							<?php }?>
+							
 						</ul>
 					</div>
 				</div>
@@ -111,7 +98,6 @@ if (isset($_GET["logout"]))
 			<div class="row animate-box">
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<h2>購買紀錄</h2>
-					<!-- <p>Dignissimos asperiores vitae velit veniam totam fuga molestias accusamus alias autem provident. Odit ab aliquam dolor eius.</p> -->
 				</div>
 			</div>
 			<div class="row">

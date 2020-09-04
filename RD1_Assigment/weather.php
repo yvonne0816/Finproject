@@ -23,7 +23,7 @@ mysqli_select_db ( $link, $dbname );
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <link rel=stylesheet type="text/css" href="style.css">
-    <title>Document</title>
+    <title>Taiwan Weather</title>
 </head>
 <body>
     

@@ -103,13 +103,14 @@ if (isset($_GET["logout"]))
                     <span >行動電話：<?= $row["m_phone"]?></span><br>
 					<span >地址：<?= $row["m_address"]?></span><br>
 					<!-- <span><input type="button" value="訂購資料" onClick="editproduct.php?m_id=<?=$row['m_id']?>"></span>></span> -->
-                    <span><input type="button" value="修改" onclick="location.href='editmember.php?m_id=<?=$row['m_id']?>'"></span>
+                    <span><input type="button" value="修改資料" onclick="location.href='editmember.php?m_id=<?=$row['m_id']?>'"></span>
 					<?php if($row["m_username"]!='kl123'){?>
-					<span><input type="button" value="刪除" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=1'"></span>
+					<span><input type="button" value="訂單紀錄" onclick="location.href='history.php?m_id=<?=$row['m_id']?>'"></span>
+					<!-- <span><input type="button" value="刪除" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=1'"></span> -->
 					<?php if($row["canuse"]==false){?>
-					<span><input type="button" value="啟動" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=2'"></span>
+					<span><input type="button" value="權限啟動" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=2'"></span>
 					<?php } else { ?>
-					<span><input type="button" value="停用" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=3'"></span>
+					<span><input type="button" value="權限停用" onclick="location.href='memberauth.php?m_id=<?=$row['m_id']?> && hi=3'"></span>
 					<?php }}?>
 				</div>
 				</form>

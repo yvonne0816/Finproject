@@ -39,11 +39,13 @@ CREATE TABLE `product` (
 CREATE TABLE `dreamlist` (
   `d_id` int(11) NOT NULL auto_increment,
   `d_quantity` int(10) NOT NULL,
+  `date` DATETIME,
   PRIMARY KEY(d_id),
   `p_id` int,
     CONSTRAINT fk_product_id FOREIGN KEY (p_id) REFERENCES product(p_id) ,
     `m_id` int,
     CONSTRAINT fk_member_id FOREIGN KEY (m_id) REFERENCES member(m_id),
+    `d_number` int(11) not null DEFAULT '0',
     `buy` BOOLEAN NOT NULL
 );
 

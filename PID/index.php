@@ -11,13 +11,13 @@ mysqli_select_db ( $link, $dbname );
 $c_id=$_GET["c_id"];
 if(isset($c_id)){
 	$sql = <<<qlc
-    select * from product p inner join category c on c.c_id=p.c_id where (c.c_id=$c_id && p_quantity>0) order by p_id desc
+    select * from product where (c_id=$c_id && p_quantity>0) order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗4");
 }
 else{
 $sql = <<<qlc
-    select * from product p inner join category c on c.c_id=p.c_id where p_quantity>0 order by p_id desc
+    select * from product where p_quantity>0 order by p_id desc
     qlc;
 	$result = mysqli_query ( $link, $sql) or die("查詢失敗5");
 }
@@ -62,11 +62,11 @@ $dquantity = $_POST["dquantity"];
 			//echo $fin;
 
 			$sql4 = <<<qlcw
-				insert into dreamlist(d_quantity,p_id,m_id,buy) values($dquantity,$p_id,$fin,false) 
+				insert into dreamlist(d_quantity,p_id,m_id,buy,date) values($dquantity,$p_id,$fin,false,CURRENT_TIMESTAMP) 
 			qlcw;
 			$result4 = mysqli_query ( $link, $sql4) or die("存取失敗3");
 
-			echo "<script>alert('加入購物車'); location.href = 'index.php';</script>";
+			echo "<script>alert('加入購物車'); location.href = 'index.php?c_id=$cid';</script>";
 		}
 	}
 ?>

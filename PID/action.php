@@ -9,8 +9,9 @@ mysqli_select_db ( $link, $dbname );
 $d_id=$_GET["d_id"];
 $id=$_GET["id"];
 if($id==2){
+    $a=rand(1,99999999);
     $sql= <<<hiu
-        update dreamlist set buy = true where d_id = $d_id;
+        update dreamlist set buy = true , d_number = $a where d_id = $d_id;
     hiu;
     $result = mysqli_query ( $link, $sql) or die("加入失敗");
 
@@ -31,18 +32,18 @@ if($id==2){
             update product set p_quantity =($p-$d) where p_id = $pid;
         hiu;         
         $result3 = mysqli_query ( $link, $sql3) or die("減失敗");
-        echo "<script>alert('成功結帳'); location.href = 'shopcar.php';</script>";
+        echo "<script>alert('成功結帳，訂單編號：$a'); location.href = 'shopcar.php';</script>";
     }
     else{
         echo "<script>alert('庫存已空，請選購其他商品'); location.href = 'shopcar.php';</script>";
     }
 }
 
-if($id==1){
-    $sql= <<<hiu
-        delete from dreamlist where d_id=$d_id
-    hiu;
-    $result = mysqli_query ( $link, $sql) or die("刪除失敗");
-    header("location:shopcar.php");
-}
+// if($id==1){
+//     $sql= <<<hiu
+//         delete from dreamlist where d_id=$d_id
+//     hiu;
+//     $result = mysqli_query ( $link, $sql) or die("刪除失敗");
+//     header("location:shopcar.php");
+// }
 ?>
