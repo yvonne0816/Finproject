@@ -1,0 +1,184 @@
+--
+-- 資料庫： `shopping`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `category`
+--
+
+CREATE TABLE `category` (
+  `c_id` int(11) NOT NULL,
+  `c_name` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `category`
+--
+
+INSERT INTO `category` (`c_id`, `c_name`) VALUES
+(1, '上衣'),
+(2, '裙子'),
+(3, '褲子');
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `dreamlist`
+--
+
+CREATE TABLE `dreamlist` (
+  `d_id` int(11) NOT NULL,
+  `d_quantity` int(10) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `p_id` int(11) DEFAULT NULL,
+  `m_id` int(11) DEFAULT NULL,
+  `d_number` int(11) NOT NULL DEFAULT '0',
+  `buy` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `dreamlist`
+--
+
+INSERT INTO `dreamlist` (`d_id`, `d_quantity`, `date`, `p_id`, `m_id`, `d_number`, `buy`) VALUES
+(1, 3, '2020-09-04 14:49:48', 10, 3, 0, 0),
+(2, 1, '2020-09-04 14:50:08', 14, 3, 11674201, 1),
+(3, 5, '2020-09-04 16:57:03', 15, 2, 0, 0),
+(4, 2, '2020-09-04 16:57:12', 10, 2, 0, 0),
+(5, 1, '2020-09-04 16:57:24', 8, 2, 96434294, 1);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `member`
+--
+
+CREATE TABLE `member` (
+  `m_id` int(11) NOT NULL,
+  `m_name` varchar(20) NOT NULL,
+  `m_username` varchar(30) NOT NULL,
+  `m_passwd` varchar(100) NOT NULL,
+  `m_sex` varchar(10) NOT NULL,
+  `m_email` varchar(100) NOT NULL,
+  `m_phone` varchar(45) NOT NULL,
+  `m_address` varchar(100) NOT NULL,
+  `canuse` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`m_id`, `m_name`, `m_username`, `m_passwd`, `m_sex`, `m_email`, `m_phone`, `m_address`, `canuse`) VALUES
+(1, 'vfdvewf', 'kl123', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', '女', 'yvonne_wu@chungyo.net', '0987456321', 'tgergrgeg', 1),
+(2, 'kl55hdfh', 'kl55473', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', '女', 'kl123gjfg@hoihi.bvfdvd', '0965412365', 'rhfiroehfore', 1),
+(3, '你我他你我', 'kl789', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', '男', 'kl123@giugi.fcwef.ed', '0985263152', 'fververcfewf', 1);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `product`
+--
+
+CREATE TABLE `product` (
+  `p_id` int(11) NOT NULL,
+  `p_name` varchar(50) NOT NULL,
+  `p_price` int(10) NOT NULL,
+  `p_quantity` int(10) NOT NULL,
+  `p_img` varchar(1000) NOT NULL,
+  `c_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `product`
+--
+
+INSERT INTO `product` (`p_id`, `p_name`, `p_price`, `p_quantity`, `p_img`, `c_id`) VALUES
+(4, '簡約豎壓紋方領排釦上衣', 399, 0, 'https://image.obdesign.com.tw/catalog/products/AB9584/AB9584@CB-2-1_70.jpg', 1),
+(5, '高含棉造型花朵蕾絲拼接袖純色上衣', 299, 90, 'https://image.obdesign.com.tw/catalog/products/AB9507/AB9507@CB-3-1_70.jpg', 1),
+(7, '碎花雪紡不對稱飄逸魚尾下襬中長裙', 579, 50, 'https://image.obdesign.com.tw/catalog/products/CA1846/CA1846@CB-1-1_70.jpg', 2),
+(8, '3D立體雕塑收腹顯瘦高彈美腿色褲', 559, 89, 'https://image.obdesign.com.tw/catalog/products/BA4886/BA4886@CB-5-1_70.jpg', 3),
+(9, '涼爽滿版印花後鬆緊傘擺中長裙', 539, 80, 'https://image.obdesign.com.tw/catalog/products/CA2058/CA2058@CB-1-1_70.jpg', 2),
+(10, '高含棉排釦牛仔五分吊帶寬褲', 660, 55, 'https://image.obdesign.com.tw/catalog/products/BA5606/BA5606@CB-1-1_70.jpg', 3),
+(11, '修身彈力雪花美臀牛仔窄管褲', 419, 61, 'https://image.obdesign.com.tw/catalog/products/ba2630/BA2630@CB-1-1_70.jpg', 3),
+(12, '交疊V領不對稱魚尾裙長袖洋裝', 679, 83, 'https://image.obdesign.com.tw/catalog/products/DA7255/DA7255@CB-1-1_70.jpg', 2),
+(14, '包芯紗質感仿兔絨燈籠袖針織上衣', 589, 79, 'https://image.obdesign.com.tw/catalog/products/FA1617/FA1617@CB-2-1_70.jpg', 1),
+(15, '格紋綁帶襯衫領縮腰洋裝', 649, 37, 'https://image.obdesign.com.tw/catalog/products/DA6431/DA6431@CB-1-1_70.jpg', 1);
+
+--
+-- 已傾印資料表的索引
+--
+
+--
+-- 資料表索引 `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`c_id`);
+
+--
+-- 資料表索引 `dreamlist`
+--
+ALTER TABLE `dreamlist`
+  ADD PRIMARY KEY (`d_id`),
+  ADD KEY `fk_product_id` (`p_id`),
+  ADD KEY `fk_member_id` (`m_id`);
+
+--
+-- 資料表索引 `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`m_id`);
+
+--
+-- 資料表索引 `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`p_id`),
+  ADD KEY `fk_category_id` (`c_id`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `category`
+--
+ALTER TABLE `category`
+  MODIFY `c_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `dreamlist`
+--
+ALTER TABLE `dreamlist`
+  MODIFY `d_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `member`
+--
+ALTER TABLE `member`
+  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `product`
+--
+ALTER TABLE `product`
+  MODIFY `p_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- 已傾印資料表的限制式
+--
+
+--
+-- 資料表的限制式 `dreamlist`
+--
+ALTER TABLE `dreamlist`
+  ADD CONSTRAINT `fk_member_id` FOREIGN KEY (`m_id`) REFERENCES `member` (`m_id`),
+  ADD CONSTRAINT `fk_product_id` FOREIGN KEY (`p_id`) REFERENCES `product` (`p_id`);
+
+--
+-- 資料表的限制式 `product`
+--
+ALTER TABLE `product`
+  ADD CONSTRAINT `fk_category_id` FOREIGN KEY (`c_id`) REFERENCES `category` (`c_id`);

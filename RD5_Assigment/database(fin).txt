@@ -1,0 +1,109 @@
+-- phpMyAdmin SQL Dump
+-- version 4.9.3
+-- https://www.phpmyadmin.net/
+--
+-- 主機： localhost:8889
+-- 產生時間： 2020 年 09 月 07 日 09:50
+-- 伺服器版本： 5.7.26
+-- PHP 版本： 7.4.2
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- 資料庫： `mybank`
+--
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `list`
+--
+
+CREATE TABLE `list` (
+  `l_id` int(11) NOT NULL,
+  `m_cash` int(11) NOT NULL,
+  `action` varchar(10) NOT NULL,
+  `over` int(11) NOT NULL,
+  `date` datetime DEFAULT NULL,
+  `t_number` int(15) NOT NULL,
+  `m_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `list`
+--
+
+INSERT INTO `list` (`l_id`, `m_cash`, `action`, `over`, `date`, `t_number`, `m_id`) VALUES
+(1, 3000, '存款', 92443, '2020-09-02 15:17:59', 97603966, 1),
+(2, 1000, '提款', 91443, '2020-09-02 15:19:37', 93684569, 1),
+(3, 30000, '存款', 121443, '2020-09-03 10:33:58', 10410351, 1),
+(4, 2000, '存款', 2000, '2020-09-04 12:10:00', 27082869, 2),
+(5, 1000, '提款', 1000, '2020-09-04 12:10:09', 20635899, 2);
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `member`
+--
+
+CREATE TABLE `member` (
+  `m_id` int(11) NOT NULL,
+  `m_name` varchar(20) NOT NULL,
+  `m_username` varchar(30) NOT NULL,
+  `m_passwd` varchar(100) NOT NULL,
+  `total_money` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 傾印資料表的資料 `member`
+--
+
+INSERT INTO `member` (`m_id`, `m_name`, `m_username`, `m_passwd`, `total_money`) VALUES
+(1, '吳善筠', 'kl55473', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', 121443),
+(2, 'ergerger', 'kl123', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', 1000),
+(3, 'kl123', 'kl789', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', 0),
+(4, 'jfghfg', 'kl7898', '7c799fb03a7e7cfe44ccef6f8c6eb95e112113b314343cefc39568e10c0d4e30', 0);
+
+--
+-- 已傾印資料表的索引
+--
+
+--
+-- 資料表索引 `list`
+--
+ALTER TABLE `list`
+  ADD PRIMARY KEY (`l_id`),
+  ADD KEY `fk_member_id` (`m_id`);
+
+--
+-- 資料表索引 `member`
+--
+ALTER TABLE `member`
+  ADD PRIMARY KEY (`m_id`);
+
+--
+-- 在傾印的資料表使用自動遞增(AUTO_INCREMENT)
+--
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `list`
+--
+ALTER TABLE `list`
+  MODIFY `l_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- 使用資料表自動遞增(AUTO_INCREMENT) `member`
+--
+ALTER TABLE `member`
+  MODIFY `m_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- 已傾印資料表的限制式
+--
+
+--
+-- 資料表的限制式 `list`
+--
+ALTER TABLE `list`
+  ADD CONSTRAINT `fk_member_id` FOREIGN KEY (`m_id`) REFERENCES `member` (`m_id`);
