@@ -80,14 +80,14 @@ if($id==3){
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-xs-2">
-						<div id="fh5co-logo"><a href="content.php">Bank<span>.</span></a></div>
+						<div id="fh5co-logo"><a href="content.html">Bank<span>.</span></a></div>
 					</div>
 					<div class="col-xs-10 text-right menu-1">
 						<ul>
 							<li class="has-dropdown">
 								<a href="#">服務項目</a>
 								<ul class="dropdown">
-									<li><a href="action.php">存款／提款</a></li>
+									<li><a href="action.html">存款／提款</a></li>
 									<li><a href="search.php?id=3">查詢餘額明細</a></li>
 								</ul>
 							</li>
