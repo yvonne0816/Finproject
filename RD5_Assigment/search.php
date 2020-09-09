@@ -15,7 +15,7 @@ $u=$_SESSION["buname"];
 if (isset($_GET["logout"]))
 {
 	unset($_SESSION["buname"]);
-	header("Location: index.php");
+	header("Location: index.html");
 	exit();
 }
 
@@ -94,7 +94,7 @@ if($id==3){
 							<?php if($u!="Guest"){?>
 							<li class="has-dropdown"><a href="#"><span><?= $u?></span></a>
 							<ul class="dropdown">
-									<li><a href="index.php?logout=1">Logout</a></li>
+									<li><a href="logout.php">Logout</a></li>
 							</ul></li>
 							<?php }else{ 
 								header("location:login.php");
